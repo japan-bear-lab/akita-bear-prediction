@@ -11,8 +11,8 @@
 
   <!-- ===== SEO ===== -->
   <!-- 公開 URL。配置先(org/repo)を変えたら canonical/og:url/og:image/twitter:image・JSON-LD・sitemap・robots も合わせて変更 -->
-  <title>秋田県 クマ出没予測マップ｜翌週の出没リスクを1kmメッシュ×週次で可視化</title>
-  <meta name="description" content="秋田県のツキノワグマ出没オープンデータ（クマダス）から、翌週の出没リスクを1kmメッシュ単位で機械学習予測。地区別ランキング・自分の地域のリスク推移・出没しやすい時間帯を地図で可視化する個人プロジェクト。" />
+  <title>秋田県 クマ出没予測マップ｜来週クマが出やすい場所を地図でチェック</title>
+  <meta name="description" content="秋田県のクマ出没オープンデータ「クマダス」をもとに、来週クマが出やすい場所を地図で色分け。地域ごとの出やすさや、過去の出没の時間帯も見られます。（個人が作成）" />
   <meta name="robots" content="index,follow,max-image-preview:large" />
   <meta name="author" content="japan-bear-lab" />
   <meta name="application-name" content="秋田クマ出没予測マップ" />
@@ -23,8 +23,8 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="秋田クマ出没予測マップ" />
   <meta property="og:locale" content="ja_JP" />
-  <meta property="og:title" content="秋田県 クマ出没予測マップ｜翌週リスクを1kmメッシュで可視化" />
-  <meta property="og:description" content="ツキノワグマ出没オープンデータから翌週の出没リスクを機械学習で予測。地区ランキング・地域別のリスク推移・時間帯を地図で可視化（個人プロジェクト）。" />
+  <meta property="og:title" content="秋田県 クマ出没予測マップ｜来週クマが出やすい場所を地図で" />
+  <meta property="og:description" content="秋田県オープンデータ「クマダス」をもとに、来週クマが出やすい場所を地図で色分け。地域ごとの出やすさや、過去の出没の時間帯も見られます。" />
   <meta property="og:url" content="https://japan-bear-lab.github.io/akita-bear-prediction/" />
   <meta property="og:image" content="https://japan-bear-lab.github.io/akita-bear-prediction/ogp.png" />
   <meta property="og:image:width" content="1200" />
@@ -33,8 +33,8 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="秋田県 クマ出没予測マップ｜翌週リスクを1kmメッシュで可視化" />
-  <meta name="twitter:description" content="ツキノワグマ出没オープンデータから翌週の出没リスクを機械学習で予測。地区ランキング・地域別推移・時間帯を地図で可視化（個人プロジェクト）。" />
+  <meta name="twitter:title" content="秋田県 クマ出没予測マップ｜来週クマが出やすい場所を地図で" />
+  <meta name="twitter:description" content="秋田県オープンデータ「クマダス」をもとに、来週クマが出やすい場所を地図で色分け。地域ごとの出やすさや、過去の出没の時間帯も見られます。" />
   <meta name="twitter:image" content="https://japan-bear-lab.github.io/akita-bear-prediction/ogp.png" />
 
   <!-- 構造化データ (JSON-LD) -->
@@ -44,7 +44,7 @@
     "@type": "WebApplication",
     "name": "秋田クマ出没予測マップ",
     "url": "https://japan-bear-lab.github.io/akita-bear-prediction/",
-    "description": "秋田県のツキノワグマ出没オープンデータ（クマダス）から、翌週の出没リスクを1kmメッシュ単位で機械学習予測し地図で可視化する個人プロジェクト。",
+    "description": "秋田県のクマ出没オープンデータ「クマダス」をもとに、来週クマが出やすい場所を地図で色分けして表示するサイト。",
     "applicationCategory": "MapApplication",
     "operatingSystem": "Web",
     "inLanguage": "ja",
@@ -98,52 +98,55 @@
     /* ---- ヘッダー ---- */
     .head { position: absolute; top: 0; left: 0; z-index: 1000; padding: 22px 26px;
       max-width: min(46vw, 520px); pointer-events: none; }
-    .kicker { font-size: 11.5px; letter-spacing: .12em; color: var(--c2);
+    .kicker { font-size: 13px; letter-spacing: .12em; color: var(--c2);
       font-weight: 700; text-transform: none; margin: 0 0 8px;
       display: flex; align-items: center; gap: 9px; }
     .kicker::before { content: ""; width: 26px; height: 2px; background: var(--c3); display: inline-block; }
     .title { font-family: var(--display); font-weight: 800; line-height: 1.04;
-      font-size: clamp(30px, 4.6vw, 58px); margin: 0; letter-spacing: -.02em;
+      font-size: clamp(34px, 5vw, 62px); margin: 0; letter-spacing: -.02em;
       text-shadow: 0 2px 30px rgba(0,0,0,.7); }
     .title em { font-style: normal; color: var(--c3); }
-    .sub { margin: 12px 0 0; font-size: 13.5px; color: var(--ink-dim); line-height: 1.7;
+    /* 改行は意味のまとまり境界のみ（語中で割れないように） */
+    .title .u { display: inline-block; white-space: nowrap; }
+    .sub { margin: 12px 0 0; font-size: 15px; color: var(--ink-dim); line-height: 1.75;
       max-width: 38ch; text-shadow: 0 1px 10px rgba(0,0,0,.8); }
 
     /* ---- モード切替 ---- */
     .toggle { position: absolute; top: 24px; right: 26px; z-index: 1001;
       display: flex; background: var(--panel); border: 1px solid var(--hair);
       border-radius: 999px; padding: 4px; backdrop-filter: blur(10px); }
-    .toggle button { font-family: var(--sans); font-weight: 700; font-size: 13px;
-      color: var(--ink-dim); background: none; border: 0; padding: 11px 18px; min-height: 44px;
+    .toggle button { font-family: var(--sans); font-weight: 700; font-size: 15px;
+      color: var(--ink-dim); background: none; border: 0; padding: 12px 20px; min-height: 46px;
       border-radius: 999px; cursor: pointer; transition: .25s; }
     .toggle button.on { color: #1a0c00; background: linear-gradient(135deg, var(--c2), var(--c3)); }
 
     /* ---- サイドパネル ---- */
     .panel { position: absolute; z-index: 1000; right: 0; top: 86px; bottom: 0;
-      width: min(394px, 92vw); padding: 18px 24px 28px; overflow-y: auto;
+      width: min(424px, 94vw); padding: 18px 24px 28px; overflow-y: auto;
       background: linear-gradient(270deg, var(--panel-solid) 0%, var(--panel-solid) 88%, transparent);
       border-left: 1px solid var(--hair);
       backdrop-filter: blur(14px); -webkit-overflow-scrolling: touch; }
     .panel::-webkit-scrollbar { width: 0; }
     :focus-visible { outline: 2px solid var(--c2); outline-offset: 2px; border-radius: 4px; }
     .metric { display: flex; align-items: baseline; gap: 10px; margin: 6px 0 4px; }
-    .metric .big { font-family: var(--display); font-weight: 800; font-size: 46px;
+    .metric .big { font-family: var(--display); font-weight: 800; font-size: 54px;
       line-height: 1; color: var(--ink); }
-    .metric .unit { font-size: 13px; color: var(--ink-dim); }
-    .metric-label { font-size: 12.5px; color: var(--c2); font-weight: 700; letter-spacing: .04em; }
+    .metric .big .pct { font-size: .5em; font-weight: 800; }
+    .metric .unit { font-size: 15px; color: var(--ink-dim); line-height: 1.5; }
+    .metric-label { font-size: 14px; color: var(--c2); font-weight: 700; letter-spacing: .04em; }
 
     .sec { margin-top: 22px; }
-    .sec h2 { font-family: var(--sans); font-weight: 700; font-size: 13px; letter-spacing: .06em;
+    .sec h2 { font-family: var(--sans); font-weight: 700; font-size: 15.5px; letter-spacing: .04em;
       color: var(--ink); margin: 0 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--hair);
-      display: flex; justify-content: space-between; align-items: baseline; }
-    .sec h2 span { color: var(--ink-faint); font-weight: 500; font-size: 11px; }
+      display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+    .sec h2 span { color: var(--ink-faint); font-weight: 500; font-size: 12.5px; white-space: nowrap; }
 
     /* 横棒ランキング */
     .bar { margin-bottom: 9px; padding: 3px 6px; margin-left: -6px; margin-right: -6px;
       border-radius: 7px; transition: background .15s; }
     .bar:hover { background: rgba(255,255,255,.04); }
     .bar .row { display: flex; align-items: baseline; justify-content: space-between;
-      font-size: 13px; margin-bottom: 3px; }
+      font-size: 15px; margin-bottom: 4px; gap: 8px; }
     .bar .row .rank { color: var(--ink-faint); font-family: var(--display); width: 22px; display: inline-block; }
     .bar .row .name { color: var(--ink); font-weight: 500; flex: 1; }
     .bar .row .val { font-family: var(--display); font-weight: 700; color: var(--ink-dim); }
@@ -161,25 +164,25 @@
     .hours .hb { width: 100%; border-radius: 4px 4px 0 0; background: rgba(255,178,77,.35);
       transition: height 1s cubic-bezier(.16,1,.3,1); }
     .hours .h.peak .hb { background: linear-gradient(180deg, var(--c3), var(--c5)); box-shadow: 0 0 12px rgba(255,122,26,.5); }
-    .hours .hl { font-size: 9.5px; color: var(--ink-faint); text-align: center; line-height: 1.2; white-space: nowrap; }
+    .hours .hl { font-size: 11px; color: var(--ink-faint); text-align: center; line-height: 1.2; white-space: nowrap; }
     .hours .h.peak .hl { color: var(--c2); font-weight: 700; }
 
-    .note { font-size: 11.5px; color: var(--ink-faint); line-height: 1.6; margin-top: 12px; }
+    .note { font-size: 13px; color: var(--ink-faint); line-height: 1.7; margin-top: 12px; }
     .note b { color: var(--ink-dim); }
 
     /* 地域トレンド */
     .area-sel { width: 100%; background: #1a1714; color: var(--ink); border: 1px solid var(--hair);
-      border-radius: 8px; padding: 11px 12px; min-height: 44px; font-family: var(--sans); font-size: 14px;
+      border-radius: 8px; padding: 12px 14px; min-height: 48px; font-family: var(--sans); font-size: 16px;
       font-weight: 700; margin-bottom: 12px; -webkit-appearance: none; appearance: none;
       background-image: linear-gradient(45deg, transparent 50%, var(--c2) 50%), linear-gradient(135deg, var(--c2) 50%, transparent 50%);
       background-position: calc(100% - 18px) 17px, calc(100% - 13px) 17px; background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; }
     .spark { width: 100%; height: 56px; display: block; }
-    .spark-cap { font-size: 10.5px; color: var(--ink-faint); display: flex; justify-content: space-between; margin-top: 2px; }
+    .spark-cap { font-size: 12px; color: var(--ink-faint); display: flex; justify-content: space-between; margin-top: 2px; }
     .trend-head { display: flex; align-items: baseline; gap: 9px; margin-top: 10px; }
-    .trend-head .fc { font-family: var(--display); font-weight: 800; font-size: 30px; color: var(--ink); }
-    .trend-head .fcu { font-size: 11px; color: var(--ink-dim); }
+    .trend-head .fc { font-family: var(--display); font-weight: 800; font-size: 36px; color: var(--ink); }
+    .trend-head .fcu { font-size: 13px; color: var(--ink-dim); line-height: 1.4; }
     .badges { display: flex; gap: 8px; margin: 11px 0 2px; flex-wrap: wrap; }
-    .badge { font-size: 12px; font-weight: 700; padding: 5px 11px; border-radius: 999px;
+    .badge { font-size: 13.5px; font-weight: 700; padding: 6px 12px; border-radius: 999px;
       display: inline-flex; gap: 6px; align-items: center; }
     .badge.up { background: rgba(240,57,43,.18); color: #ff8472; }
     .badge.down { background: rgba(91,140,184,.2); color: #93bdec; }
@@ -190,15 +193,15 @@
     .legend { position: absolute; left: 26px; bottom: 22px; z-index: 1000;
       background: var(--panel); border: 1px solid var(--hair); border-radius: 10px;
       padding: 12px 14px; backdrop-filter: blur(10px); max-width: 280px; }
-    .legend .lt { font-size: 11px; color: var(--ink-dim); font-weight: 700; letter-spacing: .04em; margin-bottom: 8px; }
+    .legend .lt { font-size: 13px; color: var(--ink-dim); font-weight: 700; letter-spacing: .04em; margin-bottom: 8px; }
     .legend .scale { height: 10px; border-radius: 5px;
       background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3), var(--c4), var(--c5)); }
-    .legend .ends { display: flex; justify-content: space-between; font-size: 10.5px; color: var(--ink-faint); margin-top: 5px; }
-    .legend .src { font-size: 10px; color: var(--ink-faint); margin-top: 9px; line-height: 1.5; }
+    .legend .ends { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink-faint); margin-top: 5px; }
+    .legend .src { font-size: 12px; color: var(--ink-faint); margin-top: 9px; line-height: 1.6; }
 
     /* 出没実績の凡例ドット */
     .dotrow { display: flex; gap: 16px; margin-top: 4px; }
-    .dotrow span { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-dim); }
+    .dotrow span { display: flex; align-items: center; gap: 6px; font-size: 14px; color: var(--ink-dim); }
     .dot { width: 11px; height: 11px; border-radius: 50%; }
 
     .hidden { display: none !important; }
@@ -207,7 +210,7 @@
     .leaflet-popup-content-wrapper { background: #181513; color: var(--ink); border-radius: 10px;
       font-family: var(--sans); box-shadow: 0 8px 30px rgba(0,0,0,.6); }
     .leaflet-popup-tip { background: #181513; }
-    .leaflet-popup-content { margin: 12px 14px; font-size: 13px; line-height: 1.6; }
+    .leaflet-popup-content { margin: 12px 14px; font-size: 14.5px; line-height: 1.6; }
     .leaflet-popup-content b { font-family: var(--display); }
     .leaflet-control-attribution { background: rgba(0,0,0,.5) !important; color: #8a8378 !important; }
     .leaflet-control-attribution a { color: #b9b1a3 !important; }
@@ -246,7 +249,7 @@
     /* ---- モバイル: パネルを下シートに ---- */
     @media (max-width: 720px) {
       .head { max-width: 92vw; padding: 15px 18px; }
-      .title { font-size: clamp(26px, 8vw, 38px); }
+      .title { font-size: clamp(30px, 9vw, 44px); }
       .toggle { top: auto; bottom: calc(58vh + 14px); left: 50%; right: auto; transform: translateX(-50%); }
       .panel { top: auto; bottom: 0; left: 0; right: 0; width: 100%; height: 58vh; min-height: 320px;
         border-left: 0; border-top: 1px solid var(--hair); border-radius: 20px 20px 0 0;
@@ -254,8 +257,8 @@
       /* ドラッグハンドル */
       .panel::before { content: ""; position: absolute; top: 9px; left: 50%; transform: translateX(-50%);
         width: 40px; height: 4px; border-radius: 2px; background: var(--hair); }
-      .legend { left: 14px; bottom: calc(58vh + 64px); padding: 9px 11px; max-width: 220px; }
-      .metric .big { font-size: 40px; }
+      .legend { left: 14px; bottom: calc(58vh + 66px); padding: 10px 12px; max-width: 240px; }
+      .metric .big { font-size: 46px; }
     }
   </style>
 </head>
@@ -266,16 +269,16 @@
   <div class="vh" id="status" role="status" aria-live="polite"></div>
 
   <header class="head">
-    <p class="kicker reveal">秋田県 ツキノワグマ｜統計予測</p>
-    <h1 class="title reveal" id="title" style="animation-delay:.05s">次週<em>出没リスク</em>マップ</h1>
-    <p class="sub reveal" id="subtitle" style="animation-delay:.12s">秋田県のツキノワグマ出没オープンデータから、翌週の出没リスクを 1km メッシュ単位で機械学習予測。地区ランキング・地域別のリスク推移・出没しやすい時間帯を可視化します。</p>
+    <p class="kicker reveal">秋田県オープンデータ「クマダス」より</p>
+    <h1 class="title reveal" id="title" style="animation-delay:.05s"><span class="u">次週</span><span class="u"><em>出没リスク</em>マップ</span></h1>
+    <p class="sub reveal" id="subtitle" style="animation-delay:.12s">秋田県のクマ出没オープンデータ「クマダス」をもとに、来週クマが出やすい場所を色で表しています。赤いほど出やすい予想です。</p>
   </header>
 
   <noscript>
     <div style="position:absolute;z-index:2000;inset:0;background:#0d0c0b;color:#f4efe6;padding:8vw;font-family:sans-serif;line-height:1.8">
       <h1>秋田県 クマ出没予測マップ</h1>
-      <p>本サイトは JavaScript で地図を描画します。お使いの環境では JavaScript が無効です。</p>
-      <p>秋田県のツキノワグマ出没オープンデータ（クマダス・CC BY 4.0）から、翌週の出没リスクを 1km メッシュ × 週次で機械学習予測し、地区別ランキング・地域別のリスク推移・出没しやすい時間帯を地図で可視化する個人プロジェクトです。予測は統計的推定であり、安全判断は自治体・秋田県等の公式情報を優先してください。</p>
+      <p>このサイトは地図を表示するのに JavaScript を使います。今は JavaScript が無効になっています。</p>
+      <p>秋田県オープンデータ「クマダス」のクマ出没情報をもとに、来週クマが出やすい場所を地図で色分けして表示するサイトです。地域ごとの出やすさや、過去の出没の時間帯も見られます。あくまで予想です。お出かけの判断は秋田県等の公式の最新情報を優先してください。</p>
     </div>
   </noscript>
 
@@ -379,28 +382,19 @@
     const titleEl = document.getElementById("title");
 
     function renderRisk() {
-      titleEl.innerHTML = '次週<em>出没リスク</em>マップ';
+      titleEl.innerHTML = '<span class="u">次週</span><span class="u"><em>出没リスク</em>マップ</span>';
       const tw = hasPred ? KUMA_PRED.target_week : "—";
       subtitle.textContent = hasPred
-        ? `過去の出没履歴から学習した勾配ブースティング木で、各 1km メッシュの「翌週に出没する確率」を予測。対象週: ${tw}〜。`
+        ? `秋田県のクマ出没オープンデータ「クマダス」をもとに、来週（${tw} の週）クマが出やすい場所を色で表示。赤いほど出やすい予想です。`
         : "予測データが未生成です。`python -m src.train` を実行してください。";
       if (!hasPred) { panel.innerHTML = '<p class="note">予測データ (predictions.js) がありません。<br><b>python -m src.train</b> を実行してください。</p>'; legend.classList.add("hidden"); return; }
       legend.classList.remove("hidden");
 
-      const cities = KUMA_PRED.city_top.slice(0, 10);
-      const maxExp = Math.max(...cities.map(c => c.expected));
-      let bars = cities.map((c, i) => `
-        <div class="bar ${i===0?'top1':''}">
-          <div class="row"><span class="rank">${i+1}</span>
-            <span class="name">${esc(c.city)}</span>
-            <span class="val">${c.expected.toFixed(0)}</span></div>
-          <div class="track"><div class="fill" data-w="${(c.expected/maxExp*100).toFixed(1)}"></div></div>
-        </div>`).join("");
-
+      // 時間帯チャート
       const hrs = KUMA_PRED.time_dist;
       const maxH = Math.max(...hrs.map(h => h.n));
-      const peak = hrs.reduce((a,b)=> b.n>a.n?b:a, hrs[0]);
-      let hours = hrs.map(h => `
+      const peak = hrs.reduce((a, b) => b.n > a.n ? b : a, hrs[0]);
+      const hours = hrs.map(h => `
         <div class="h ${h.band===peak.band?'peak':''}">
           <div class="hb" data-h="${(h.n/maxH*100).toFixed(1)}"></div>
           <div class="hl">${h.band.replace(/\(.*\)/, "")}</div>
@@ -412,46 +406,68 @@
       const opts = areaNames.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join("");
       const trendSec = areaNames.length ? `
         <div class="sec">
-          <h2>自分の地域のリスク推移 <span>市町村 × 直近26週</span></h2>
-          <label class="vh" for="area-sel">リスク推移を見る市町村を選択</label>
-          <select class="area-sel" id="area-sel" aria-label="リスク推移を見る市町村">${opts}</select>
+          <h2>地域ごとの出やすさ <span>市町村を選択</span></h2>
+          <label class="vh" for="area-sel">市町村を選ぶ</label>
+          <select class="area-sel" id="area-sel" aria-label="市町村を選ぶ">${opts}</select>
           <div id="trend-body"></div>
+          <div id="rank-body"></div>
         </div>` : "";
 
       panel.innerHTML = `
-        <div class="metric-label">最高リスク地点</div>
-        <div class="metric"><span class="big">${(top1.prob*100).toFixed(0)}<span style="font-size:24px">%</span></span>
-          <span class="unit">${esc(top1.city)}　${esc(top1.band)}</span></div>
+        <div class="metric-label">県内で最も注意したい場所</div>
+        <div class="metric"><span class="big">${(top1.prob*100).toFixed(0)}<span class="pct">%</span></span>
+          <span class="unit">${esc(top1.city)}<br>${esc(top1.band)}</span></div>
         ${trendSec}
         <div class="sec">
-          <h2>出没リスク 地区ランキング <span>翌週の見込み</span></h2>
-          ${bars}
-          <p class="note">数値 = <b>翌週クマが出そうな 1km 区画の見込み数</b>（確率の合計）。地区が広いほど大きくなりやすい。</p>
-        </div>
-        <div class="sec">
-          <h2>出没しやすい時間帯 <span>過去の全出没</span></h2>
-          <div class="hours" role="img" aria-label="過去の出没の時間帯分布。最も多いのは${esc(peak.band)}。">${hours}</div>
-          <p class="note"><b>注</b>: 時間帯は通報・目撃のしやすさ（人の活動時間）の影響を含む。早朝・夕方の実リスクは過小評価の可能性。</p>
+          <h2>出やすい時間帯 <span>過去の記録より</span></h2>
+          <div class="hours" role="img" aria-label="過去の出没の時間帯。最も多いのは${esc(peak.band)}。">${hours}</div>
+          <p class="note">※ これは「目撃・通報された時間」の傾向です。日中ほど人が多く記録されやすいだけで、朝・夕も油断は禁物です。</p>
         </div>`;
 
       legend.innerHTML = `
-        <div class="lt">翌週 出没確率</div>
+        <div class="lt">来週の出やすさ</div>
         <div class="scale"></div>
-        <div class="ends"><span>低</span><span>高</span></div>
-        <div class="src">予測: 勾配ブースティング木（時系列分割 ROC-AUC 0.88）<br>2022 年以降の履歴で学習・1km メッシュ × 週次<br>
-          <b style="color:var(--ink-dim)">※ 統計的推定であり実際の出没を保証しません。安全判断は自治体・<a href="https://www.pref.akita.lg.jp/" target="_blank" rel="noopener noreferrer">秋田県</a>等の公式情報を優先してください。</b></div>`;
+        <div class="ends"><span>出にくい</span><span>出やすい</span></div>
+        <div class="src">出典：秋田県オープンデータ「クマダス」（クマ出没情報）<br>2022 年以降の記録の傾向から計算しています。<br>
+          <b style="color:var(--ink-dim)">※ あくまで予想です。実際の出没を保証しません。お出かけの判断は<a href="https://www.pref.akita.lg.jp/" target="_blank" rel="noopener noreferrer">秋田県</a>等の最新情報を優先してください。</b></div>`;
       requestAnimationFrame(animateBars);
 
-      // 地域トレンドの初期描画 + セレクタ連動
+      // 市町村セレクタ → トレンド + その市町村の地区ランキングを連動更新
       const sel = document.getElementById("area-sel");
       if (sel) {
-        // ランキング 1 位の地区が属する市町村を初期選択
-        const top1city = areaNames.find(c => (KUMA_PRED.mesh_top[0].city || "").startsWith(c)) || areaNames[0];
+        const top1city = areaNames.find(c => (top1.city || "").startsWith(c)) || areaNames[0];
         sel.value = top1city;
-        const draw = () => { document.getElementById("trend-body").innerHTML = renderTrend(sel.value); };
+        const draw = () => {
+          document.getElementById("trend-body").innerHTML = renderTrend(sel.value);
+          document.getElementById("rank-body").innerHTML = renderRank(sel.value);
+          requestAnimationFrame(animateBars);
+        };
         sel.onchange = draw;
         draw();
       }
+    }
+
+    // 選んだ市町村の「地区」ランキング
+    function renderRank(city) {
+      const t = (KUMA_PRED.trends || {})[city];
+      const areas = (t && t.areas) || [];
+      if (!areas.length)
+        return `<div class="sec"><h2>出やすい地区 <span>${esc(city)}</span></h2>
+          <p class="note">この市町村の地区別データはまだありません。</p></div>`;
+      const maxE = Math.max(...areas.map(a => a.expected), 1e-6);
+      const short = a => (a.startsWith(city) ? a.slice(city.length) : a) || a;
+      const bars = areas.map((a, i) => `
+        <div class="bar ${i===0?'top1':''}">
+          <div class="row"><span class="rank">${i+1}</span>
+            <span class="name">${esc(short(a.area))}</span>
+            <span class="val">${a.expected.toFixed(1)}</span></div>
+          <div class="track"><div class="fill" data-w="${(a.expected/maxE*100).toFixed(1)}"></div></div>
+        </div>`).join("");
+      return `<div class="sec">
+        <h2>出やすい地区 <span>${esc(city)}</span></h2>
+        ${bars}
+        <p class="note">数字が大きい地区ほど、来週クマが出やすい予想です。</p>
+      </div>`;
     }
 
     // ===== トレンド描画ヘルパ =====
@@ -483,33 +499,33 @@
       if (!t) return "";
       const fmt = p => (p === null || p === undefined) ? "データ不足"
         : (p > 0 ? "+" : "") + p + "%";
-      const sparkLabel = `${city} のリスク推移（直近26週）。次週予測 ${t.forecast.toFixed(1)}、`
-        + `前週比 ${fmt(t.wow_pct)}、前年同期比 ${fmt(t.yoy_pct)}。`;
+      const sparkLabel = `${city} の出やすさの推移（この半年）。先週より ${fmt(t.wow_pct)}、`
+        + `去年の同じ時期より ${fmt(t.yoy_pct)}。`;
       return `${sparkline(t.series, sparkLabel)}
-        <div class="spark-cap" aria-hidden="true"><span>${esc(t.series[0].w)}</span><span>← 26週 →</span><span>次週</span></div>
-        <div class="trend-head"><span class="fc">${t.forecast.toFixed(1)}</span>
-          <span class="fcu">翌週 出そうな区画の<br>見込み数（リスク指数）</span></div>
-        <div class="badges">${badge("前週比", t.wow_pct)}${badge("前年同期比", t.yoy_pct)}</div>`;
+        <div class="spark-cap" aria-hidden="true"><span>${esc(t.series[0].w)}</span><span>← この半年 →</span><span>来週</span></div>
+        <div class="trend-head"><span class="fc">${t.forecast.toFixed(0)}</span>
+          <span class="fcu">出やすさの目安<br>（大きいほど注意）</span></div>
+        <div class="badges">${badge("先週より", t.wow_pct)}${badge("去年の同じ時期より", t.yoy_pct)}</div>`;
     }
 
     function renderActual() {
-      titleEl.innerHTML = '<em>出没実績</em>マップ';
+      titleEl.innerHTML = '<span class="u"><em>出没</em>実績マップ</span>';
       const m = (typeof KUMA_META !== "undefined") ? KUMA_META : {};
-      subtitle.textContent = `秋田県クマダスに記録された全出没（ツキノワグマ）。${m.from || ""}〜${m.to || ""}。`;
+      subtitle.textContent = `秋田県オープンデータ「クマダス」に記録された、これまでのクマ出没（ツキノワグマ）。${m.from || ""}〜${m.to || ""}。`;
       panel.innerHTML = `
-        <div class="metric-label">記録された出没</div>
+        <div class="metric-label">これまでの出没</div>
         <div class="metric"><span class="big">${(m.count||0).toLocaleString()}</span><span class="unit">件</span></div>
         <div class="sec">
-          <h2>凡例</h2>
+          <h2>色の意味</h2>
           <div class="dotrow">
-            <span><i class="dot" style="background:#ff8c3a"></i>公式記録</span>
-            <span><i class="dot" style="background:#5b8cb8"></i>市民投稿</span>
+            <span><i class="dot" style="background:#ff8c3a"></i>公式の記録</span>
+            <span><i class="dot" style="background:#5b8cb8"></i>市民からの投稿</span>
           </div>
-          <p class="note"><b>市民投稿（【投稿】）</b>は真偽不明の注記があるものを含む。除外せず信頼度の参考として表示。</p>
+          <p class="note">青色は<b>市民からの投稿</b>で、まだ確認されていない情報も含みます。</p>
         </div>
         <div class="sec">
           <h2>データについて</h2>
-          <p class="note">2021 年以前は記録が極端に少ないが、これは出没の不在ではなく<b>オープンデータ収録の開始時期</b>による。予測モデルは 2022 年以降に限定。</p>
+          <p class="note">2021 年以前の記録が少ないのは、<b>データの公開が始まった時期</b>のためで、クマがいなかったわけではありません。出典：秋田県オープンデータ「クマダス」。</p>
         </div>`;
       legend.classList.add("hidden");
     }

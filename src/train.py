@@ -263,7 +263,18 @@ def city_trends(full, panel, f):
             "last": round(last, 2),
             "wow_pct": (round((cur / last - 1) * 100) if last > 0 else None),
             "yoy_pct": (round((cur / year_ago - 1) * 100) if year_ago > 0 else None),
+            "areas": [],
         }
+
+    # 市町村ごとの「地区」ランキング（選択した市町村で絞り込み表示するため）
+    area_df = (f[f["area"] != "（周辺）"].groupby(["city", "area"])["prob"].sum()
+               .reset_index(name="expected"))
+    for city, sub in area_df.groupby("city"):
+        if city not in trends:
+            continue
+        top = sub.sort_values("expected", ascending=False).head(8)
+        trends[city]["areas"] = [{"area": a, "expected": round(float(e), 2)}
+                                 for a, e in zip(top["area"], top["expected"])]
     return trends
 
 
