@@ -1,0 +1,19 @@
+# 依存はバージョン固定（再現性 + サプライチェーン対策）。
+# 検証済みの解決済みセット。更新するときはここを意図的に上げる。
+
+# --- M1: 取得・クレンジング・可視化 ---
+requests==2.34.2
+pandas==3.0.3
+
+# --- M2: メッシュ集計・週次パネル化 ---
+jismesh==2.1.0
+pyarrow==24.0.0
+scikit-learn==1.9.0
+
+# --- 主要な推移的依存も固定（決定論的インストール） ---
+numpy==2.4.6
+scipy==1.17.1
+python-dateutil==2.9.0.post0
+
+# --- M3 ---
+# 予測は sklearn HistGradientBoostingClassifier を使用（lightgbm 不使用 = libomp 不要）。

@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# データ（再生成可能 / 容量・ライセンス配慮で追跡しない。CI で生成）
+data/
+web/points.js
+web/predictions.js
+web/ogp.png
+
+# ロゴ検討用スクラッチ（公開対象外）
+logo-options.html
+
+# OS
+.DS_Store

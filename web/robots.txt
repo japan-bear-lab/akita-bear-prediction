@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://japan-bear-lab.github.io/akita-bear-prediction/sitemap.xml
